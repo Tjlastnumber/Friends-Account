@@ -1,2 +1,0 @@
-<!--component/count-up.wxml-->
-<text class="{{class}}">{{value}}</text>
