@@ -1,0 +1,70 @@
+/* component/md-checkbox/md-checkbox.wxss */
+.md-checkbox {
+  position: relative;
+  margin: 16px 0;
+  text-align: left;
+  box-sizing: border-box;
+}
+.md-checkbox.md-checkbox-inline {
+  display: inline-block;
+}
+.md-checkbox label {
+  box-sizing: border-box;
+  cursor: pointer;
+  padding-left: 24px;
+}
+.md-checkbox label::before, .md-checkbox label::after {
+  box-sizing: border-box;
+  content: " ";
+  position: absolute;
+  left: 0px;
+  top: 1px;
+}
+
+.md-checkbox label::after {
+  top: 2px;
+  left: 7px;
+	width: 6px;
+  height: 13px;
+  border: 2px solid #fff;
+  border-top-style: none;
+  border-left-style: none;
+	transform: rotate(45deg) scale3D(0,0,1);
+	transition: all .3s ease;
+}
+
+.md-checkbox label::before {
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  border: 2px solid rgba(0, 0, 0, 0.54);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.md-checkbox label.checked::before {
+  background: var(--color);
+	border: 2px solid transparent;
+}
+.md-checkbox label.checked::after {
+	transform: rotate(45deg) scale3D(1,1,1);
+}
+.md-checkbox label.disabled,
+.md-checkbox label.disabled::before {
+  border-color: #00000042;
+  color: #00000042;
+}
+
+.md-checkbox label.disabled.checked::before {
+  background: rgba(0, 0, 0, 0.26);
+}
+
+.md-checkbox checkbox:indeterminate + label::after {
+	border-bottom-style: none;
+	transform: rotate(90deg) scale3D(1, 1, 1);
+}
+
+.md-checkbox checkbox:indeterminate + label::before {
+	background: rgba(0, 0, 0, 0.26);
+}

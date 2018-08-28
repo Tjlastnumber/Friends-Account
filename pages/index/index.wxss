@@ -1,0 +1,66 @@
+.header {
+    width: 100%;
+}
+
+.header .left{
+    width: 50%;
+    align-items: flex-end;
+    justify-content: space-between;
+    display: inline-flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.header .left::after{
+    content: '';
+    background: rgba(0, 0, 0, .3);
+    top: 50rpx;
+    right: 0;
+    width: 1px;
+    height: 80rpx;
+    display: inline-block;
+    position: absolute; 
+}
+
+.header .right{
+    width: 50%;
+    align-items: flex-end;
+    justify-content: space-between;
+    display: inline-flex;
+    flex-direction: column;
+}
+
+.section {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.income,
+.expend {
+    font-size: 80rpx;
+    line-height: 100rpx;
+    font-weight: 100;
+    margin: 16px; 
+}
+
+.income::before{
+    content: '收';
+    color: green;
+    font-size: 30rpx; 
+    margin-right: 16rpx;
+}
+
+.expend::before{
+    content: '支';
+    color: red;
+    font-size: 30rpx; 
+    margin-right: 16rpx;
+}
+
+/* .income:after,
+.expend:after {
+    content: '.00';
+    font-size: 50rpx;
+} */
+

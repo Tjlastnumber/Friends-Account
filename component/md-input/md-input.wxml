@@ -1,0 +1,13 @@
+<!--component/md-input/md-input.wxml-->
+<view class='md-input' style='--input-width: {{width}}px; --input-color: {{color}}'>
+  <input value="{{value}}" 
+  class="{{_focus}}" 
+  type='{{type}}' 
+  bindfocus='onfocus' 
+  bindblur='onblur' 
+  bindinput='_handlerInput' />
+  <span class="bar {{_focus}}" 
+  style="--margin-left: {{_placeholderWidth}}px"></span>
+  <label id="md-input-placeholder"
+         class="title {{_focus}}">{{placeholder}}</label>
+</view>

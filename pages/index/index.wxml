@@ -1,0 +1,20 @@
+<!--index.wxml-->
+<view class="chart">
+  <canvas canvas-id="lineCanvas" disable-scroll="true" class="canvas" bindtouchstart="touchHandler" style="width: 100%"></canvas>
+</view>
+<view class='header'>
+  <view class='left'>
+    <count-up class="income" startVal="{{oldincome}}" endVal="{{income}}" decimals="2" duration="1.5"></count-up>
+  </view>
+  <view class="right">
+    <count-up class="expend" startVal="0" endVal="120.34" decimals="2" duration="2.5"></count-up>
+  </view>
+</view>
+<view class="section">
+  <picker mode="date" value="{{currentDate}}" fields="month" bindchange="bindDateChange">
+    <view class="picker">
+      {{date}} 月
+    </view>
+  </picker>
+</view>
+<md-input placeholder="收入" value="{{income}}" bindvaluechange="_incomeChange"/>

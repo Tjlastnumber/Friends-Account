@@ -1,0 +1,9 @@
+<!--component/md-checkbox/md-checkbox.wxml-->
+<view class='md-checkbox'>
+  <label class='md-checkbox-label' 
+  bindtap='_onChecked' 
+  class='{{_checked__class}}'
+  style='--color: {{color}}'>
+    {{label}}
+  </label>
+</view>
