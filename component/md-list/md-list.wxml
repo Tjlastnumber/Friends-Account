@@ -1,0 +1,6 @@
+<!--component/count-up/md-list.wxml-->
+<view wx:for="{{listData}}">
+  <view>
+    {{item}}
+  </view>
+</view>

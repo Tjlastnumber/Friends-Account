@@ -31,7 +31,8 @@ Component({
    * 组件的初始数据
    */
   data: {
-    count: 0
+    count: 0,
+    fontSize: 60,
   },
 
   ready() {
@@ -45,11 +46,20 @@ Component({
     _countUp(newVal, oldVal) {
       var countUp = new cu.CountUp(this, 'count', this.data.startVal, this.data.endVal, this.data.decimals, this.data.duration, this.data.options)
       if (!countUp.error) {
-        countUp.start()
+        countUp.start(() => {
+          this.updateFontSize()
+        })
         console.log(this.data.count)
       } else {
         console.error(countUp.error)
       }
+    },
+    updateFontSize() {
+      // if (this.data.count.length >= 8) {
+      //   this.setData({
+      //     fontSize: this.data.fontSize - 10
+      //   })
+      // }
     }
   }
 })

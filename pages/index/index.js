@@ -1,5 +1,6 @@
 //index.js
-var wxCharts = require('../../utils/wxcharts-min.js')
+const wxCharts = require('../../utils/wxcharts-min.js')
+const util = require('../../utils/util.js')
 //获取应用实例
 const app = getApp()
 var lineChart = null
@@ -9,6 +10,7 @@ var options = {
   separator: ',', 
   decimal: '.', 
 };
+const today = new Date()
 
 Page({
   data: {
@@ -17,19 +19,31 @@ Page({
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     checked: true,
-    date: new Date().getMonth() + 1,
-    currentDate: new Date('yyyy-mm-dd'),
+    date: util.formatTime(today),
+    currentDate: today,
     oldincome: 0,
     income: 0,
-    expenses: 0.00
+    expenses: 0.00,
+    month: [],
+    currentDay: 0
   },
   bindDateChange(e) {
     this.setData({
       'date': e.detail.value
     })
+    var _date = this.data.date.split('-')
+    var year = _date[0]
+    var month = _date[1]
+    this._initDay(year, month)
+    this.setData({
+      currentDay: 1 
+    })
   },
   touchHandler: function (e) {
     console.log(lineChart.getCurrentDataIndex(e));
+    this.setData({
+      currentDay: lineChart.getCurrentDataIndex(e) + 1
+    })
     lineChart.showToolTip(e, {
       // background: '#7cb5ec',
       format: function (item, category) {
@@ -40,9 +54,9 @@ Page({
   createSimulationData: function () {
     var categories = [];
     var data = [];
-    for (var i = 0; i < 10; i++) {
-      categories.push('2016-' + (i + 1));
-      data.push(Math.random() * (20 - 10) + 10);
+    for (var i = 0; i < 12; i++) {
+      categories.push((i + 1) + '月');
+      data.push(Math.random() * (200 - 100) + 10);
     }
     // data[4] = null;
     return {
@@ -53,7 +67,7 @@ Page({
   updateData: function () {
     var simulationData = this.createSimulationData();
     var series = [{
-      name: '成交量1',
+      name: '收入',
       data: simulationData.data,
       format: function (val, name) {
         return val.toFixed(2) + '万';
@@ -71,6 +85,7 @@ Page({
     })
   },
   onLoad: function () {
+    this._initDay(today.getFullYear(), today.getMonth())
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -132,35 +147,50 @@ Page({
       animation: true,
       // background: '#f5f5f5',
       series: [{
-        name: '成交量1',
+        name: '收入',
         data: simulationData.data,
         format: function (val, name) {
-          return val.toFixed(2) + '万';
+          return val.toFixed(2) + '元';
         }
       }, {
-        name: '成交量2',
+        name: '支出',
         data: [2, 0, 0, 3, null, 4, 0, 0, 2, 0],
         format: function (val, name) {
-          return val.toFixed(2) + '万';
+          return val.toFixed(2) + '元';
         }
       }],
       xAxis: {
         disableGrid: true
       },
       yAxis: {
-        title: '成交金额 (万元)',
         format: function (val) {
           return val.toFixed(2);
         },
         min: 0
       },
       width: windowWidth,
-      height: 200,
+      height: 150,
       dataLabel: false,
       dataPointShape: true,
       extra: {
         lineStyle: 'curve'
       }
     });
+  },
+  _initDay(year, month) {
+    var m = [] 
+    for (var i = 1; i <= new Date(year, month, 0).getDate(); i++) { 
+      var account = {
+        id: 'd' + i,
+        record: (i % 2) > 0,
+        month: i,
+        selected: (i === 30)
+      }
+      m.push(account)
+    }
+    this.setData({
+      month: m
+    })
   }
+
 })

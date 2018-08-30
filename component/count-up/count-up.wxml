@@ -1,2 +1,4 @@
 <!--component/count-up.wxml-->
-<text class="{{class}}">{{count}}</text>
+<text id="count-up-text" 
+      class="{{class}} text-size"
+      style="--text-size: {{fontSize}}rpx">{{count}}</text>

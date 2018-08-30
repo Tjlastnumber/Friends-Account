@@ -1,5 +1,7 @@
 .header {
-    width: 100%;
+    margin: 0 16rpx;
+    position: relative;
+    box-shadow: 1rpx 2rpx 4rpx rgba(0, 0, 0, .6);
 }
 
 .header .left{
@@ -14,10 +16,10 @@
 .header .left::after{
     content: '';
     background: rgba(0, 0, 0, .3);
-    top: 50rpx;
+    top: 30rpx;
     right: 0;
     width: 1px;
-    height: 80rpx;
+    height: 68rpx;
     display: inline-block;
     position: absolute; 
 }
@@ -36,12 +38,16 @@
     flex-direction: column;
 }
 
+.chart {
+    margin: 8rpx 0;
+}
+
 .income,
 .expend {
     font-size: 80rpx;
     line-height: 100rpx;
     font-weight: 100;
-    margin: 16px; 
+    margin: 8rpx 16rpx; 
 }
 
 .income::before{
@@ -58,9 +64,40 @@
     margin-right: 16rpx;
 }
 
-/* .income:after,
-.expend:after {
-    content: '.00';
-    font-size: 50rpx;
-} */
+.month-select {
+    height: 160rpx;
+    width: 100%;
+    background: white;
+    box-shadow: 0 3px 4px rgba(0, 0, 0, .3);
+    white-space:nowrap;
+    padding: 0;
+}
 
+.month-item {
+    display: block;
+    width: 80rpx;
+    height: 80rpx;
+    font-size: 70rpx;
+    line-height: 70rpx;
+    display: inline-block;
+    text-align: center;
+    position: relative;
+    padding: 40rpx;
+    margin: 0;
+}
+
+.month-item i:after{
+    content: ' ';
+    background: red;
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+}
+
+.month-item.selected {
+    background: #6200ee;
+    color: rgba(255, 255, 255, .9);
+    border-radius: 6px 6px 0px 0px; 
+    padding: 40rpx 56rpx;
+}
