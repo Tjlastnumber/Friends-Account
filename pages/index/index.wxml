@@ -31,14 +31,14 @@
 <text class="title">当日明细</text>
 <scroll-view scroll-y class="detail">
   <ul>
-    <li>
+    <li class="expenses-item">
       <view class="detail-left">
         <text class="detail-title">吃饭</text>
         <text class="detail-sub">支出</text>
       </view>
       <text class="amount">100.00</text>
     </li>
-    <li>
+    <li class="income-item">
       <view class="detail-left">
         <text class="detail-title">吃饭</text>
         <text class="detail-sub">支出</text>

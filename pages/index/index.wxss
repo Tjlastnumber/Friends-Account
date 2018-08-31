@@ -104,6 +104,25 @@ page {
     flex-direction: column;
     flex-wrap: nowrap;
     justify-content: space-between;
+    position: relative;
+    margin-left: 20rpx;
+}
+
+.detail li::before{
+    content: " ";
+    width: 8px;
+    height: 8px;
+    position: absolute;
+    border-radius: 50%;
+    left: 20rpx;
+}
+
+.detail li.expenses-item::before{
+    background: #fa4a4d;
+}
+
+.detail li.income-item::before {
+    background: #11b719;
 }
 
 .detail-title {
@@ -127,6 +146,10 @@ page {
     font-weight: 200px;
     /* line-height: 70px; */
     color: rgba(0, 0, 0, .7);
+}
+
+.detail ul {
+    position: relative;
 }
 
 .detail li {
