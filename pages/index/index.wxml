@@ -5,21 +5,9 @@
       {{date}}
     </view>
   </picker>
+  <i class="down-arrow"></i>
 </view>
-<scroll-view scroll-x
-             scroll-with-animation
-             class="month-select" 
-             scroll-into-view="{{'d'+currentDay}}">
-  <view class="month-item {{item.selected? 'selected': ''}}" 
-        id="{{item.id}}"
-        wx:for="{{month}}"
-        wx:key="{{item.id}}">
-    {{item.month}}
-    <block wx:if="{{item.record}}">
-      <i></i>
-    </block>
-  </view> 
-</scroll-view>
+<day-select year="{{selectedYear}}" month="{{selectedMonth}}" day="{{currentDay}}"/>
 <view class="chart">
   <canvas canvas-id="lineCanvas" disable-scroll="true" class="canvas" bindtouchstart="touchHandler" style="width: 100%"></canvas>
 </view>

@@ -1,0 +1,42 @@
+/* component/day-select/day-select.wxss */
+.day-select {
+    height: 160rpx;
+    width: 100%;
+    background: white;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, .2);
+    white-space:nowrap;
+    padding: 0;
+}
+
+.day-item {
+    display: block;
+    width: 80rpx;
+    height: 80rpx;
+    color: rgba(0, 0, 0, .6);
+    font-size: 60rpx;
+    line-height: 70rpx;
+    display: inline-block;
+    text-align: center;
+    position: relative;
+    padding: 40rpx 30rpx;
+    margin: 0;
+    -moz-transition: all .2s ease-in-out;
+    -ms-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+}
+
+.day-item i:after{
+    content: ' ';
+    background: #FF5A60;
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+}
+
+.day-item.selected {
+    background: #6200ee;
+    color: rgba(255, 255, 255, 1);
+    padding: 40rpx 60rpx;
+    border-radius: 6px 6px 0px 0px; 
+}

@@ -14,6 +14,9 @@ const today = new Date()
 
 Page({
   data: {
+    selectedYear: today.getFullYear(),
+    selectedMonth: today.getMonth() + 1,
+    currentDay: 1,
     motto: 'Hello World',
     userInfo: {},
     hasUserInfo: false,
@@ -24,19 +27,18 @@ Page({
     oldincome: 0,
     income: 0,
     expenses: 0.00,
-    month: [],
-    currentDay: 0
   },
   bindDateChange(e) {
+    var date = e.detail.value
+    var year = date.split('-')[0]
+    var month = date.split('-')[1] 
     this.setData({
-      'date': e.detail.value
-    })
-    var _date = this.data.date.split('-')
-    var year = _date[0]
-    var month = _date[1]
-    this._initDay(year, month)
-    this.setData({
-      currentDay: 1 
+      'date': date,
+      selectedYear: year,
+      selectedMonth: month,
+      currentDay: (year == today.getFullYear()&&
+                  month == (today.getMonth() + 1)) ?
+                  today.getDate() : 1
     })
   },
   touchHandler: function (e) {
@@ -85,7 +87,11 @@ Page({
     })
   },
   onLoad: function () {
-    this._initDay(today.getFullYear(), today.getMonth())
+    setTimeout(() => {
+      this.setData({
+        currentDay: today.getDate() 
+      })
+    }, 3000)
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -177,20 +183,7 @@ Page({
       }
     });
   },
-  _initDay(year, month) {
-    var m = [] 
-    for (var i = 1; i <= new Date(year, month, 0).getDate(); i++) { 
-      var account = {
-        id: 'd' + i,
-        record: (i % 2) > 0,
-        month: i,
-        selected: (i === 30)
-      }
-      m.push(account)
-    }
-    this.setData({
-      month: m
-    })
-  }
+  _selectItem() {
 
+  }
 })
