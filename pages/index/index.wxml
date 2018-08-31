@@ -1,27 +1,49 @@
 <!--index.wxml-->
 <view class="section">
-  <picker mode="date" value="{{currentDate}}" fields="month" bindchange="bindDateChange">
+  <picker mode="date" fields="month" bindchange="bindDateChange">
     <view class="picker">
       {{date}}
     </view>
   </picker>
   <i class="down-arrow"></i>
 </view>
-<day-select year="{{selectedYear}}" 
-            month="{{selectedMonth}}" 
-            day="{{currentDay}}" 
-            tags="{{[31]}}"
-            bindselectedDay="_selectedDay"/>
-<view class="chart">
-  <canvas canvas-id="lineCanvas" disable-scroll="true" class="canvas" bindtouchstart="touchHandler" style="width: 100%"></canvas>
+
+<view style="background: white;">
+  <day-select year="{{selectedYear}}" 
+              month="{{selectedMonth}}" 
+              day="{{currentDay}}" 
+              tags="{{[31]}}"
+              bindselectedDay="_selectedDay"/>
+  <view class="chart">
+    <canvas canvas-id="lineCanvas" disable-scroll="true" class="canvas" bindtouchstart="touchHandler" style="width: 100%"></canvas>
+  </view>
 </view>
-<view class='header'>
+
+<view class='card'>
   <view class='left'>
-    <count-up class="income" startVal="{{oldincome}}" endVal="{{income}}" decimals="2" duration="1.5"></count-up>
+    <count-up class="income" startVal="{{oldincome}}" endVal="{{income}}" decimals="2" duration="1"></count-up>
   </view>
   <view class="right">
-    <count-up class="expend" startVal="0" endVal="120.34" decimals="2" duration="2.5"></count-up>
+    <count-up class="expend" startVal="0" endVal="{{expenses}}" decimals="2" duration="1"></count-up>
   </view>
 </view>
-<view class="detail">
-</view>
+
+<text class="title">当日明细</text>
+<scroll-view scroll-y class="detail">
+  <ul>
+    <li>
+      <view class="detail-left">
+        <text class="detail-title">吃饭</text>
+        <text class="detail-sub">支出</text>
+      </view>
+      <text class="amount">100.00</text>
+    </li>
+    <li>
+      <view class="detail-left">
+        <text class="detail-title">吃饭</text>
+        <text class="detail-sub">支出</text>
+      </view>
+      <text class="amount">100.00</text>
+    </li>
+  </ul>
+</scroll-view>

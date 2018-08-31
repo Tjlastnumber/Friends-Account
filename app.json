@@ -6,6 +6,7 @@
   "window":{
     "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "#fff",
+    "backgroundColor": "#eeeeee",
     "navigationBarTitleText": "友账",
     "navigationBarTextStyle":"black"
   },

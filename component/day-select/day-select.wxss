@@ -6,6 +6,7 @@
     box-shadow: 0 3px 5px rgba(0, 0, 0, .2);
     white-space:nowrap;
     padding: 0;
+    z-index: 999;
 }
 
 .day-item {

@@ -29,7 +29,6 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     checked: true,
     date: util.formatTime(today),
-    currentDate: today,
     oldincome: 0,
     income: 0,
     expenses: 0.00,
@@ -104,12 +103,11 @@ Page({
         month: _month
       }]
     }
-    console.log(_year)
     setTimeout(() => {
       this.setData({
         currentDay: today.getDate()
       })
-    }, 3000)
+    }, 1000)
     /**
    *    if (app.globalData.userInfo) {
    *   this.setData({
@@ -145,14 +143,6 @@ Page({
     this.setData({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
-    })
-  },
-  _incomeChange(e) {
-    this.setData({
-      'oldincome': this.data.income
-    })
-    this.setData({
-      'income': e.detail.value
     })
   },
   createChart() {
@@ -203,28 +193,32 @@ Page({
     });
   },
   _selectedDay(e) {
-    console.log(e)
     var year = e.detail.year
     var month = e.detail.month
     var day = e.detail.day
-    var haveYear = _year.find(y => y === e.detail.year)
-    if (!haveYear) {
-      this._initAccountDate(year, month, day)
-    }
-    console.log(_year)
+    this.setData({
+      currentDay: day
+    })
+    var dayAccount = this._getAccountDate(year, month, day)
+    this.setData({
+      income: dayAccount.income,
+      expenses: dayAccount.expenses
+    })
   },
-  _initAccountDate(year, month, day) {
+  _getAccountDate(year, month, day) {
     var haveYear = _year.find(y => y.key === year)
+    var newDay = {
+            key: day,
+            income: Math.random() * 100,
+            expenses: Math.random() * 200
+          }
+    var result = newDay
     if (!haveYear) {
       _year.push({
         key: year,
         month: [{
           key: month,
-          day: [{
-            key: day,
-            income: 0,
-            expenses: 0
-          }]
+          day: [newDay]
         }]
       })
     } else {
@@ -232,22 +226,17 @@ Page({
       if (!haveMonth) {
         haveYear.month.push({
           key: month,
-          day: [{
-            key: day,
-            income:0,
-            expense:0
-          }]
-        }) 
+          day: [newDay]
+        })
       } else {
         var haveDay = haveMonth.day.find(d => d.key === day)
         if (!haveDay) {
-          haveMonth.day.push({
-            key: day,
-            income: 0,
-            expenses: 0
-          }) 
+          haveMonth.day.push(newDay) 
+        } else {
+          result = haveDay
         }
       }
     }
+    return result
   }
 })
