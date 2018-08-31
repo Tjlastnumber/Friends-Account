@@ -40,7 +40,7 @@ Component({
    * 组件的初始数据
    */
   data: {
-    selectedDay: "",
+    selectedDay: 0,
     everyDay: [ ]
   },
 
@@ -62,7 +62,9 @@ Component({
         every_day.push({
           id: 'd-' + d,
           tag: this.data.tags.find(v=> v === d),
-          value: d
+          year: this.data.year,
+          month: this.data.month,
+          day: d,
         })
       }
       this.setData({
@@ -71,7 +73,7 @@ Component({
     },
     _selectDay(e) {
       this.setData({
-        selectedDay: e.target.dataset.item.value
+        selectedDay: e.target.dataset.item.day
       })
       this.triggerEvent('selectedDay', e.target.dataset.item, e.option)
     }

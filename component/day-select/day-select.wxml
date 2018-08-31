@@ -3,13 +3,13 @@
              scroll-with-animation
              class="day-select" 
              scroll-into-view="{{ 'd-' + ((selectedDay - 2) <= 0 ? 1 : (selectedDay - 2)) }}">
-  <view class="day-item {{selectedDay == item.value ? 'selected': ''}}" 
+  <view class="day-item {{selectedDay == item.day ? 'selected': ''}}" 
         id="{{item.id}}"
         wx:for="{{everyDay}}"
         wx:key="{{item.id}}"
         data-item="{{item}}"
         bindtap="_selectDay">
-        {{item.value}}
+        {{item.day}}
     <block wx:if="{{item.tag}}">
       <i></i>
     </block>
