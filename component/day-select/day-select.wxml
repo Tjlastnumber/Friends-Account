@@ -2,7 +2,7 @@
 <scroll-view scroll-x
              scroll-with-animation
              class="day-select" 
-             scroll-into-view="{{ 'd-' + ((selectedDay - 2) <= 0 ? 1 : (selectedDay - 2)) }}">
+             scroll-into-view="{{ 'd-' + ((selectedDay - 3) <= 0 ? 1 : (selectedDay - 3)) }}">
   <view class="day-item {{selectedDay == item.day ? 'selected': ''}}" 
         id="{{item.id}}"
         wx:for="{{everyDay}}"

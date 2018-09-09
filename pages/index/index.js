@@ -23,15 +23,26 @@ Page({
     selectedYear: today.getFullYear(),
     selectedMonth: today.getMonth() + 1,
     currentDay: 1,
-    motto: 'Hello World',
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     checked: true,
     date: util.formatTime(today),
     oldincome: 0,
-    income: 0,
-    expenses: 0.00,
+    oldexpenses: 0,
+    oneDayAccount: {
+      income: {
+        total: 0,
+        detail: []
+      },
+      expenses: {
+        total: 0,
+        detail: []
+      }
+    },
+    bodyHeight: 0,
+    chartHeight: 150,
+    scrollTop: 0
   },
   bindDateChange(e) {
     var date = e.detail.value
@@ -46,14 +57,14 @@ Page({
         today.getDate() : 1
     })
   },
-  touchHandler: function (e) {
-    lineChart.showToolTip(e, {
-      // background: '#7cb5ec',
-      format: function (item, category) {
-        return category + ' ' + item.name + ':' + item.data
-      }
-    });
-  },
+  // touchHandler: function (e) {
+  //   lineChart.showToolTip(e, {
+  //     // background: '#7cb5ec',
+  //     format: function (item, category) {
+  //       return category + ' ' + item.name + ':' + item.data
+  //     }
+  //   });
+  // },
   createSimulationData: function () {
     var categories = [];
     var data = [];
@@ -61,7 +72,6 @@ Page({
       categories.push((i + 1) + '月');
       data.push(Math.random() * (200 - 100) + 10);
     }
-    // data[4] = null;
     return {
       categories: categories,
       data: data
@@ -88,20 +98,22 @@ Page({
     })
   },
   onLoad: function () {
+    setTimeout(() => {
+      wx.createSelectorQuery()
+      .in(this)
+      .select('#header')
+      .boundingClientRect(res => {
+        console.log(res)
+        this.setData({
+          bodyHeight: res.height
+        })
+      }).exec()
+    }, 1500);
+
     if (_year.length === 0 && _month.length === 0 && _day.length === 0) {
-      _day = [{
-        key: today.getDate(),
-        income: this.data.income,
-        expenses: this.data.expenses
-      }] 
-      _month = [{
-        key: today.getMonth() + 1,
-        day: _day
-      }]
-      _year = [{
-        key: today.getFullYear(),
-        month: _month
-      }]
+      this.setData({
+        oneDayAccount: this._getAccountDate(today.getFullYear(), today.getMonth() + 1, today.getDate())
+      }) 
     }
     setTimeout(() => {
       this.setData({
@@ -136,6 +148,13 @@ Page({
    *   })
     } */
     this.createChart();
+  },
+  onPageScroll (e) {
+    var maxH = 150
+    var height = e.scrollTop > 75 ? 0 : maxH
+    this.setData({
+      chartHeight: height
+    })
   },
   getUserInfo: function (e) {
     console.log(e)
@@ -201,16 +220,21 @@ Page({
     })
     var dayAccount = this._getAccountDate(year, month, day)
     this.setData({
-      income: dayAccount.income,
-      expenses: dayAccount.expenses
+      oneDayAccount: dayAccount
     })
   },
   _getAccountDate(year, month, day) {
     var haveYear = _year.find(y => y.key === year)
     var newDay = {
             key: day,
-            income: Math.random() * 100,
-            expenses: Math.random() * 200
+            income: {
+              total: Math.random() * 100, 
+              detail: []
+            },
+            expenses: {
+              total: Math.random() * 200,
+              detail: []
+            },
           }
     var result = newDay
     if (!haveYear) {

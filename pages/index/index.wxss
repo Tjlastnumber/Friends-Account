@@ -1,24 +1,47 @@
 page {
     background: #eeeeee;
 }
+
+.body{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 99;
+}
+
+.body-scale {
+    font-size: 30rpx !important;
+}
+
 .section {
     padding: 16rpx 0;
     background: white;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    display: flex;
 }
+
 .card {
-    margin: 0 16rpx 16rpx;
     position: relative;
+    margin: 0 16rpx 16rpx;
     border-radius: 3px;
     box-shadow: 1px 2px 4px rgba(0, 0, 0, .3);
     background: white;
+
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: row;
+    flex-wrap: nowrap;
 }
 
-.card .left{
+.card .left,
+.card .right{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
     width: 50%;
-    align-items: flex-end;
-    justify-content: space-between;
-    display: inline-flex;
-    flex-direction: column;
     position: relative;
 }
 
@@ -33,27 +56,28 @@ page {
     position: absolute; 
 }
 
-.card .right{
-    width: 50%;
-    align-items: flex-end;
-    justify-content: space-between;
-    display: inline-flex;
-    flex-direction: column;
-}
-
-.section {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-}
-
 .chart {
     margin: 8px 0;
     background: white;
+    height: 150px;
+    z-index: 1;
+
+    /* -moz-transition: all .3s ease-in-out;
+    -ms-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out; */
+}
+
+.canvas {
+    height: var(--chartHeight, '150px');
+    
+    -moz-transform-origin: bottom;
+    -ms-transform-origin: bottom;
+    transform-origin: bottom;
 }
 
 .income,
 .expend {
+    position: relative;
     font-size: 80rpx;
     line-height: 100rpx;
     font-weight: 200px;
@@ -74,13 +98,18 @@ page {
     margin-right: 16rpx;
 }
 
-.down-arrow {
+.picker {
+    position: relative;
+    display: inline-block;
+}
+
+.section .arrow {
     position: relative;
 }
 
-.down-arrow:after {
+.section .arrow::before {
     content: '';
-    left: -4rpx;
+    left: 5px;
     border: 4px solid #000000;
     border-left-color: transparent;
     border-right-color: transparent;

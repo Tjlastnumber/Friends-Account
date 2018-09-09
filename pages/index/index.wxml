@@ -1,30 +1,31 @@
 <!--index.wxml-->
-<view class="section">
-  <picker mode="date" fields="month" bindchange="bindDateChange">
-    <view class="picker">
-      {{date}}
-    </view>
-  </picker>
-  <i class="down-arrow"></i>
-</view>
-
-<view style="background: white;">
+<view id="header" class="body body-scale">
+  <view class="section">
+    <picker mode="date" fields="month" bindchange="bindDateChange">
+      <view class="picker">
+        {{date}}
+      </view>
+    </picker>
+    <i class="arrow"></i>
+  </view>
   <day-select year="{{selectedYear}}" 
               month="{{selectedMonth}}" 
               day="{{currentDay}}" 
-              tags="{{[31]}}"
+              tags="{{[31]}}" 
               bindselectedDay="_selectedDay"/>
-  <view class="chart">
-    <canvas canvas-id="lineCanvas" disable-scroll="true" class="canvas" bindtouchstart="touchHandler" style="width: 100%"></canvas>
-  </view>
 </view>
 
+<view style="background: white; margin: {{bodyHeight + 10}}px 0 0 0;">
+  <view id="chart" class="chart"> 
+    <canvas class="lineCanvas" canvas-id="lineCanvas" disable-scroll="true" class="canvas" style="width: 100%; --chartHeight: {{chartHeight}}px"></canvas>
+  </view>
+</view>
 <view class='card'>
   <view class='left'>
-    <count-up class="income" startVal="{{oldincome}}" endVal="{{income}}" decimals="2" duration="1"></count-up>
+    <count-up class="income" startVal="{{oldincome}}" endVal="{{oneDayAccount.income.total}}" decimals="2" duration="1"></count-up>
   </view>
   <view class="right">
-    <count-up class="expend" startVal="0" endVal="{{expenses}}" decimals="2" duration="1"></count-up>
+    <count-up class="expend" startVal="{{oldexpenses}}" endVal="{{oneDayAccount.expenses.total}}" decimals="2" duration="1"></count-up>
   </view>
 </view>
 
@@ -32,6 +33,27 @@
 <scroll-view scroll-y class="detail">
   <ul>
     <li class="expenses-item">
+      <view class="detail-left">
+        <text class="detail-title">吃饭</text>
+        <text class="detail-sub">支出</text>
+      </view>
+      <text class="amount">100.00</text>
+    </li>
+    <li class="income-item">
+      <view class="detail-left">
+        <text class="detail-title">吃饭</text>
+        <text class="detail-sub">支出</text>
+      </view>
+      <text class="amount">100.00</text>
+    </li>
+    <li class="income-item">
+      <view class="detail-left">
+        <text class="detail-title">吃饭</text>
+        <text class="detail-sub">支出</text>
+      </view>
+      <text class="amount">100.00</text>
+    </li>
+    <li class="income-item">
       <view class="detail-left">
         <text class="detail-title">吃饭</text>
         <text class="detail-sub">支出</text>

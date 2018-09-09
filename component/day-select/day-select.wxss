@@ -1,21 +1,18 @@
 /* component/day-select/day-select.wxss */
 .day-select {
-    height: 160rpx;
     width: 100%;
     background: white;
     box-shadow: 0 3px 5px rgba(0, 0, 0, .2);
     white-space:nowrap;
     padding: 0;
     z-index: 999;
+    position: relative;
 }
 
 .day-item {
     display: block;
-    width: 80rpx;
-    height: 80rpx;
     color: rgba(0, 0, 0, .6);
     font-size: 60rpx;
-    line-height: 70rpx;
     display: inline-block;
     text-align: center;
     position: relative;
