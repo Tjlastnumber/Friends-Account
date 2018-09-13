@@ -16,7 +16,7 @@ const AccountCollection = class {
                 e.day === date.day
         })
 
-        return ac
+        return ac || new Account()
     }
 
     /**
@@ -39,6 +39,10 @@ const AccountCollection = class {
         }
     }
 
+    /**
+     * Remove Account
+     * @param {Account} oneDayAccount 
+     */
     remove(oneDayAccount) {
         if (this.get(oneDayAccount)) {
             return __accounts.splice(__accounts.indexOf(oneDayAccount), 1)
@@ -54,8 +58,27 @@ const AccountCollection = class {
  */
 const Account = class {
     constructor() {
-        var n = util.toNumber(amount)
         this.details = Object.create(null)
+    }
+
+    income() {
+        var v = Object.keys(this.details).map(key => {
+            let detail = this.details[key]
+            let type = detail.type  
+            return type > 0 ? detail.amount : 0 
+        })
+
+        return v.reduce((p, c) => { return p + c }, 0) 
+    }
+
+    expenses() {
+        var v = Object.keys(this.details).map(key => {
+            let detail = this.details[key]
+            let type = detail.type  
+            return type < 0 ? detail.amount : 0 
+        })
+
+        return v.reduce((p, c) => { return p + c }, 0) 
     }
 
     get(key) {
@@ -89,6 +112,6 @@ function _setDetials(details, key, name, amount) {
 }
 
 module.exports = {
-    Accounts: AccountCollection,
+    AccountCollection: AccountCollection,
     Account: Account
 }

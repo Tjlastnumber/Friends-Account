@@ -14,7 +14,7 @@ var options = {
 const today = util.today()
 Page({
     data: {
-        account: [],
+        accountCollection: new modules.AccountCollection(),
         selectedYear: today.year,
         selectedMonth: today.month,
         currentDay: 1,
@@ -23,16 +23,9 @@ Page({
         canIUse: wx.canIUse('button.open-type.getUserInfo'),
         checked: true,
         date: util.formatTime(new Date()),
-        oneDayAccount: {
-            income: {
-                total: 0,
-                detail: []
-            },
-            expenses: {
-                total: 0,
-                detail: []
-            }
-        },
+        account: new modules.Account(), 
+        income: 0,
+        expenses: 0,
         bodyHeight: 0,
         chartHeight: 150,
         scrollTop: 0
@@ -140,13 +133,19 @@ Page({
         this.createChart();
     },
     onShow() {
+        let accountCollection = new modules.AccountCollection(wx.getStorageSync('Account'))
+        let account = accountCollection.get({
+                year: today.year,
+                month: today.month,
+                day: today.day
+        })
+        console.log(account)
         // 保存后处理
         this.setData({
-            account: wx.getStorageSync('Account') || []
-        })
-
-        this.setData({
-            oneDayAccount: this._getAccountDate(today.year, today.month, today.day)
+            accountCollection: accountCollection,
+            account: account,
+            income: account.income(),
+            expenses: account.expenses()
         })
     },
     onPageScroll(e) {
@@ -211,57 +210,18 @@ Page({
         });
     },
     _selectedDay(e) {
-        var year = e.detail.year
-        var month = e.detail.month
-        var day = e.detail.day
-        var dayAccount = this._getAccountDate(year, month, day)
+        let year = e.detail.year
+        let month = e.detail.month
+        let day = e.detail.day
+        let account = this.data.accountCollection.get({
+            year: year,
+            month: month,
+            day: day
+        })
         this.setData({
             currentDay: day,
-            oneDayAccount: dayAccount
+            account: account 
         })
-    },
-    _getAccountDate(year, month, day) {
-        var haveYear = this.data.account.find(y => y.key === year)
-        var newDay = {
-            key: day,
-            date: year + "/" + month + "/" + day,
-            account: {
-                income: {
-                    total: 0,
-                    detail: []
-                },
-                expenses: {
-                    total: 0,
-                    detail: []
-                },
-            }
-        }
-        var result = newDay
-        if (!haveYear) {
-            this.data.account.push({
-                key: year,
-                month: [{
-                    key: month,
-                    days: [newDay]
-                }]
-            })
-        } else {
-            var haveMonth = haveYear.month.find(m => m.key === month)
-            if (!haveMonth) {
-                haveYear.month.push({
-                    key: month,
-                    days: [newDay]
-                })
-            } else {
-                var haveDay = haveMonth.days.find(d => d.key === day)
-                if (!haveDay) {
-                    haveMonth.days.push(newDay)
-                } else {
-                    result = haveDay
-                }
-            }
-        }
-        return result
     },
     navToAccountInput() {
         wx.navigateTo({
