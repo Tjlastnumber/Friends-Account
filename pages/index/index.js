@@ -93,14 +93,6 @@ Page({
         })
     },
     onLoad: function() {
-        var ac = new modules.Accounts()
-        var account = new modules.Account({
-          type: '收入',
-          name: '吃饭',
-          amount: 120
-        })
-        ac.addOrUpdate(today, account)
-        console.log(ac.get(today).account.type)
 
         setTimeout(() => {
             wx.createSelectorQuery()
@@ -113,11 +105,6 @@ Page({
                 }).exec()
         }, 1500);
 
-        // if (_year.length === 0 && _year.month.length === 0 && _year.month.day.length === 0 ) {
-        //   this.setData({
-        //     oneDayAccount: this._getAccountDate(today.getFullYear(), today.getMonth() + 1, today.getDate())
-        //   }) 
-        // }
         setTimeout(() => {
             this.setData({
                 currentDay: today.day

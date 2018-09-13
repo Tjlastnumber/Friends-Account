@@ -1,6 +1,6 @@
 const accountMoudle = require('./account.js')
 
 module.exports = {
-    Accounts: accountMoudle.Accounts,
+    AccountCollection: accountMoudle.AccountCollection,
     Account: accountMoudle.Account
 }
