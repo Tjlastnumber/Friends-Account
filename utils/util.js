@@ -18,6 +18,29 @@ const isEmpty = n => {
   return n === null || n === undefined || n === ''
 }
 
+const today = () => {
+  var date = new Date()
+  return {
+    year: date.getFullYear(),
+    month: date.getMonth() + 1,
+    day: date.getDate(),
+    week: date.getDay()
+  }
+}
+
+const isObject = (obj) => {
+  return obj !== null && typeof obj === 'object'
+}
+
+const toNumber = (val) => {
+  const n = parseFloat(val)
+  return isNaN(n) ? val : n
+}
+
 module.exports = {
-  formatTime: formatTime
+  formatTime: formatTime,
+  today: today,
+  isObject: isObject,
+  toNumber: toNumber,
+  isEmpty: isEmpty
 }

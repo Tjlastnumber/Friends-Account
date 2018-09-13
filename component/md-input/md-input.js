@@ -17,12 +17,16 @@ Component({
       }
     },
     width: {
-      type: Number,
-      value: 150
+      type: String,
+      value: '100%'
     },
     color: {
       type: String,
       value: '#6200ee'
+    },
+    inputClass: {
+      type: String,
+      value: ''
     }
   },
   ready: function() {

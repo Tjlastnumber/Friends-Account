@@ -1,0 +1,7 @@
+<!--pages/account-input/account-input.wxml-->
+<view class="form">
+    <md-input input-class="amount" width="100%" placeholder="金额" type="number" bindvaluechange="_amountChanged"/>
+</view>
+<footer>
+    <button hover-class="hover" bindtap="save">保存</button>
+</footer>

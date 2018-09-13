@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "md-input": "/component/md-input/md-input",
+    "md-checkbox": "/component/md-checkbox/md-checkbox"
+  }
+}

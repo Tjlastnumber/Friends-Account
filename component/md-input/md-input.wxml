@@ -1,5 +1,5 @@
 <!--component/md-input/md-input.wxml-->
-<view class='md-input' style='--input-width: {{width}}px; --input-color: {{color}}'>
+<view class='md-input {{inputClass}}' style='--input-width: {{width}}; --input-color: {{color}}'>
   <input value="{{value}}" 
   class="{{_focus}}" 
   type='{{type}}' 

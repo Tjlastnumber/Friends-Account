@@ -22,15 +22,15 @@
 </view>
 <view class='card'>
   <view class='left'>
-    <count-up class="income" startVal="{{oldincome}}" endVal="{{oneDayAccount.income.total}}" decimals="2" duration="1"></count-up>
+    <count-up class="income" startVal="0" endVal="{{oneDayAccount.account.income.total}}" decimals="2" duration="1"></count-up>
   </view>
   <view class="right">
-    <count-up class="expend" startVal="{{oldexpenses}}" endVal="{{oneDayAccount.expenses.total}}" decimals="2" duration="1"></count-up>
+    <count-up class="expend" startVal="0" endVal="{{oneDayAccount.account.expenses.total}}" decimals="2" duration="1"></count-up>
   </view>
 </view>
 
-<text class="title">当日明细</text>
-<scroll-view scroll-y class="detail">
+<view class="detail-list">
+  <text class="title">当日明细</text>
   <ul>
     <li class="expenses-item">
       <view class="detail-left">
@@ -68,4 +68,8 @@
       <text class="amount">100.00</text>
     </li>
   </ul>
-</scroll-view>
+</view>
+
+<footer class="footer" bindtap="navToAccountInput">
+  <text> 添加账目 </text> 
+</footer>
