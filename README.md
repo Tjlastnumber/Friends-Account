@@ -1,2 +1,2 @@
-# Friends-Account
+# Friends Account
 We Chat App
