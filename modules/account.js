@@ -16,27 +16,34 @@ const AccountCollection = class {
                 e.day === date.day
         })
 
-        return ac || new Account()
+        return ac ? new Account(ac.account) : undefined
     }
+
+    isHave = date => __accounts.some(e =>
+        e.year === date.year &&
+        e.month === date.month &&
+        e.day === date.day)
 
     /**
      * Add or Update Account
      * @param {Object} date 
      * @param {Account} account 
      */
-    addOrUpdate(date, account) {
-        var time = date || util.today()
-        var haveAccount = this.get(time)
-        var ac = {}
-        ac.year = time.year || util.today().year
-        ac.month = time.month || util.today().month
-        ac.day = time.day || util.today().day
-        ac.account = account
+    addOrUpdate(account, date) {
+        var date = date || util.today()
+        var haveAccount = this.get(date)
+        var ac = {
+            year: date.year,
+            month: date.month,
+            day: date.day,
+            account: account
+        }
         if (haveAccount) {
             __accounts.splice(__accounts.indexOf(haveAccount), 1, ac)
         } else {
             __accounts.push(ac)
         }
+        return this
     }
 
     /**
@@ -57,28 +64,28 @@ const AccountCollection = class {
  * @param {Object} options 
  */
 const Account = class {
-    constructor() {
-        this.details = Object.create(null)
+    constructor(data) {
+        this.details = data ? data.details : Object.create(null)
     }
 
     income() {
         var v = Object.keys(this.details).map(key => {
             let detail = this.details[key]
-            let type = detail.type  
-            return type > 0 ? detail.amount : 0 
+            let type = detail.type
+            return type > 0 ? detail.amount : 0
         })
 
-        return v.reduce((p, c) => { return p + c }, 0) 
+        return v.reduce((p, c) => { return p + c }, 0)
     }
 
     expenses() {
         var v = Object.keys(this.details).map(key => {
             let detail = this.details[key]
-            let type = detail.type  
-            return type < 0 ? detail.amount : 0 
+            let type = detail.type
+            return type < 0 ? detail.amount : 0
         })
 
-        return v.reduce((p, c) => { return p + c }, 0) 
+        return v.reduce((p, c) => { return p + c }, 0)
     }
 
     get(key) {
@@ -86,14 +93,16 @@ const Account = class {
     }
 
     add(name, amount) {
+        if (amount === 0) return
         const date = new Date()
         const key = date.toISOString()
-        if (amount == 0) return
-        _setDetials(this.details, key, name, amount)
+        _setDetials(this.details, key, name, amount, date)
     }
 
     update(key, name, amount) {
-        _setDetials(this.details, key, name, amount)
+        if (amount === 0) return
+        const date = new Date()
+        _setDetials(this.details, key, name, amount, date)
     }
 
     delete(key) {
@@ -101,7 +110,7 @@ const Account = class {
     }
 }
 
-function _setDetials(details, key, name, amount) {
+function _setDetials(details, key, name, amount, date) {
     let n = util.toNumber(amount)
     details[key] = {
         amount: Math.abs(amount),

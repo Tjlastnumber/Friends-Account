@@ -20,11 +20,16 @@ const isEmpty = n => {
 
 const today = () => {
   var date = new Date()
+  const year = date.getFullYear(),
+        month = date.getMonth() + 1,
+        day = date.getDate(),
+        week = date.getDay()
+  date = null
   return {
-    year: date.getFullYear(),
-    month: date.getMonth() + 1,
-    day: date.getDate(),
-    week: date.getDay()
+    year: year, 
+    month: month,
+    day: day,
+    week: week
   }
 }
 

@@ -26,6 +26,7 @@ Page({
         account: new modules.Account(), 
         income: 0,
         expenses: 0,
+        details: [],
         bodyHeight: 0,
         chartHeight: 150,
         scrollTop: 0
@@ -138,14 +139,14 @@ Page({
                 year: today.year,
                 month: today.month,
                 day: today.day
-        })
-        console.log(account)
-        // 保存后处理
+        }) || new modules.Account()
+        let details = Object.keys(account.details).map(key => ({key, val: account.details[key]}))
         this.setData({
             accountCollection: accountCollection,
             account: account,
             income: account.income(),
-            expenses: account.expenses()
+            expenses: account.expenses(),
+            details: details
         })
     },
     onPageScroll(e) {
@@ -217,10 +218,14 @@ Page({
             year: year,
             month: month,
             day: day
-        })
+        }) || new modules.Account()
+        let details = Object.keys(account.details).map(key => ({key, val: account.details[key]}))
         this.setData({
             currentDay: day,
-            account: account 
+            account: account,
+            income: account.income(),
+            expenses: account.expenses(),
+            details: details
         })
     },
     navToAccountInput() {

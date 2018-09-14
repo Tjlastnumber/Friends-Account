@@ -22,50 +22,22 @@
 </view>
 <view class='card'>
   <view class='left'>
-    <count-up class="income" startVal="0" endVal="{{oneDayAccount.account.income.total}}" decimals="2" duration="1"></count-up>
+    <count-up class="income" startVal="0" endVal="{{income}}" decimals="2" duration="1"></count-up>
   </view>
   <view class="right">
-    <count-up class="expend" startVal="0" endVal="{{oneDayAccount.account.expenses.total}}" decimals="2" duration="1"></count-up>
+    <count-up class="expend" startVal="0" endVal="{{expenses}}" decimals="2" duration="1"></count-up>
   </view>
 </view>
 
 <view class="detail-list">
   <text class="title">当日明细</text>
   <ul>
-    <li class="expenses-item">
+    <li wx:key="{{item.key}}" class="{{item.val.type < 0 ? 'expenses-item' : 'income-item'}}" wx:for="{{details}}">
       <view class="detail-left">
-        <text class="detail-title">吃饭</text>
-        <text class="detail-sub">支出</text>
+        <text class="detail-title">{{item.val.name}}</text>
+        <text class="detail-sub">{{item.val.type > 0 ? '收入': '支出'}}</text>
       </view>
-      <text class="amount">100.00</text>
-    </li>
-    <li class="income-item">
-      <view class="detail-left">
-        <text class="detail-title">吃饭</text>
-        <text class="detail-sub">支出</text>
-      </view>
-      <text class="amount">100.00</text>
-    </li>
-    <li class="income-item">
-      <view class="detail-left">
-        <text class="detail-title">吃饭</text>
-        <text class="detail-sub">支出</text>
-      </view>
-      <text class="amount">100.00</text>
-    </li>
-    <li class="income-item">
-      <view class="detail-left">
-        <text class="detail-title">吃饭</text>
-        <text class="detail-sub">支出</text>
-      </view>
-      <text class="amount">100.00</text>
-    </li>
-    <li class="income-item">
-      <view class="detail-left">
-        <text class="detail-title">吃饭</text>
-        <text class="detail-sub">支出</text>
-      </view>
-      <text class="amount">100.00</text>
+      <text class="amount">{{item.val.amount}}</text>
     </li>
   </ul>
 </view>
