@@ -26,7 +26,7 @@ Page({
 
     let accountCollection = new modules.AccountCollection(wx.getStorageSync('Account'))
 
-    console.log(accountCollection)
+    console.log(accountCollection.get())
 
     this.setData({
       someDay: someDay,
@@ -39,10 +39,6 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    const someDay = this.data.someDay
-    this.setData({
-      account: this.data.accountCollection.get(someDay) || new modules.Account()
-    })
   },
 
   /**
@@ -90,7 +86,7 @@ Page({
     let account = this.data.accountCollection.get(someDay)
     account = account || new modules.Account()
     account.add('测试', this.data.amount)
-    this.data.accountCollection.addOrUpdate(account)
+    this.data.accountCollection.addOrUpdate(account, someDay)
 
     wx.setStorageSync('Account', this.data.accountCollection.get())
     wx.navigateBack({

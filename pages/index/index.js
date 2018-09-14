@@ -17,7 +17,7 @@ Page({
         accountCollection: new modules.AccountCollection(),
         selectedYear: today.year,
         selectedMonth: today.month,
-        currentDay: 1,
+        currentDay: null,
         userInfo: {},
         hasUserInfo: false,
         canIUse: wx.canIUse('button.open-type.getUserInfo'),
@@ -33,17 +33,23 @@ Page({
     },
     bindDateChange(e) {
         var date = e.detail.value
-        var year = +date.split('-')[0]
-        var month = +date.split('-')[1]
-        var currentDay = (year == today.year &&
-            month == today.month) ?
+        var year = util.toNumber(date.split('-')[0])
+        var month = util.toNumber(date.split('-')[1])
+        var currentDay = (year === today.year &&
+            month === today.month) ?
             today.day : 1
         this.setData({
             date: date,
             selectedYear: year,
-            selectedMonth: month,
-            currentDay: currentDay,
-            oneDayAccount: this._getAccountDate(year, month, currentDay)
+            selectedMonth: month
+        })
+
+        this._selectedDay({
+            detail: {
+                year: year,
+                month: month,
+                day: currentDay
+            }
         })
     },
     // touchHandler: function (e) {
@@ -100,8 +106,12 @@ Page({
         }, 1500);
 
         setTimeout(() => {
-            this.setData({
-                currentDay: today.day
+            this._selectedDay({
+                detail: {
+                    year: this.data.selectedYear,
+                    month: this.data.month,
+                    day: today.day
+                }
             })
         }, 1000)
         /**
@@ -135,18 +145,16 @@ Page({
     },
     onShow() {
         let accountCollection = new modules.AccountCollection(wx.getStorageSync('Account'))
-        let account = accountCollection.get({
-                year: today.year,
-                month: today.month,
-                day: today.day
-        }) || new modules.Account()
-        let details = Object.keys(account.details).map(key => ({key, val: account.details[key]}))
+        let someDay = {
+            year: this.data.selectedYear,
+            month: this.data.selectedMonth,
+            day: this.data.currentDay
+        }
         this.setData({
-            accountCollection: accountCollection,
-            account: account,
-            income: account.income(),
-            expenses: account.expenses(),
-            details: details
+            accountCollection: accountCollection
+        })
+        this._selectedDay({
+            detail: someDay
         })
     },
     onPageScroll(e) {
@@ -229,8 +237,9 @@ Page({
         })
     },
     navToAccountInput() {
+        let query = 'year=' + this.data.selectedYear + '&month=' + this.data.selectedMonth + '&day=' + this.data.currentDay
         wx.navigateTo({
-            url: '../account-input/account-input',
+            url: '../account-input/account-input?' + query,
             success: function(res) {
             },
             fail: function() {
